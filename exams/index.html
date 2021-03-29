@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Task Manager App</title>
+</head>
+
+<body>
+    <nav class="blue-grey">
+        <div class="nav-wrapper">
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/">Home</a></li>
+                <li class="signed-in" style="display: none;"><a href="/taskmanager">Tasks</a></li>
+                <li class="signed-in" style="display: none;"><a href="/books">Books</a></li>
+                <li class="signed-in" style="display: none;"><a href="/exams">Exams</a></li>
+                <li class="signed-in" style="display: none;"><a href="#">Projects</a></li>
+                <li class="signed-in" style="display: none;"><a href="#">Jobs</a></li>
+                <li class="signed-in" style="display: none;"><a href="#">Posts</a></li>
+                <li class="signed-out signin modal-trigger" style="display: none;" data-target="modal-login"><a
+                        href="#">SignIn</a></li>
+                <li class="signed-in" style="display: none;" id="logout"><a href="#">Signout</a></li>
+                <li class="signed-out signin modal-trigger" style="display: none;" data-target="modal-signup"><a
+                        href="#">Sign Up</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-demo">
+        <li><a href="/">Home</a></li>
+        <li class="signed-in" style="display: none;"><a href="/taskmanager">Tasks</a></li>
+        <li class="signed-in" style="display: none;"><a href="/books">Books</a></li>
+        <li class="signed-in" style="display: none;"><a href="/exams">Exams</a></li>
+        <li class="signed-in" style="display: none;"><a href="#">Projects</a></li>
+        <li class="signed-in" style="display: none;"><a href="#">Jobs</a></li>
+        <li class="signed-in" style="display: none;"><a href="#">Posts</a></li>
+        <li class="signed-out signin modal-trigger" style="display: none;" data-target="modal-login"><a
+                href="#">SignIn</a></li>
+        <li class="signed-in" style="display: none;" id="logout"><a href="#">Signout</a></li>
+        <li class="signed-out signin modal-trigger" style="display: none;" data-target="modal-signup"><a href="#">Sign
+                Up</a></li>
+    </ul>
+
+    <!-- SIGN UP MODAL -->
+    <div id="modal-signup" class="modal">
+        <div class="modal-content">
+            <h4>Sign up</h4><br />
+            <form id="signup-form">
+                <div class="input-field">
+                    <input type="email" id="signup-email" required />
+                    <label for="signup-email">Email address</label>
+                </div>
+                <div class="input-field">
+                    <input type="password" id="signup-password" required />
+                    <label for="signup-password">Choose password</label>
+                </div>
+                <button class="btn light-blue darken-4 z-depth-0">Sign up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- LOGIN MODAL -->
+    <div id="modal-login" class="modal">
+        <div class="modal-content">
+            <h4>Login</h4><br />
+            <form id="login-form">
+                <div class="input-field">
+                    <input type="email" id="login-email" required />
+                    <label for="login-email">Email address</label>
+                </div>
+                <div class="input-field">
+                    <input type="password" id="login-password" required />
+                    <label for="login-password">Your password</label>
+                </div>
+                <button class="btn light-blue darken-4 z-depth-0">Login</button>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <div class="container welcome">Hello!</div>
+        <hr />
+        <div class="card-panel " style="margin: 30px;">
+            <div class="row">
+                <h5>Planned Exams</h5>
+                <div class="col s12">
+                    <table class="responsive-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Exam</th>
+                                <th>Days Remaining</th>
+                                <th>Planned Hours</th>
+                                <th># of Topics</th>
+                                <th># of Topics Completed</th>
+                                <th># of Topics Remaining</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body-exam">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr />
+            <h5>Exam Topics</h5>
+            <div class="row center-align" id="categories-actual-planned" style="margin:20px;">
+            </div>
+
+            <div class="row">
+                <div class="col s12">
+                    <table class="responsive-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Topic</th>
+                                <th>Exam</th>
+                                <th>Exam Planned Date</th>
+                                <th>Planned Hours</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-functions.js"></script>
+    <script>
+        // Initialize Firebase
+        var firebaseConfig = {
+            apiKey: "AIzaSyBC8G2YgmbUVaW_ifPsoFOp__o7ECBBqSY",
+            authDomain: "abhik-dashboard-firebase.firebaseapp.com",
+            projectId: "abhik-dashboard-firebase",
+            storageBucket: "abhik-dashboard-firebase.appspot.com",
+            messagingSenderId: "1061516711337",
+            appId: "1:1061516711337:web:4ed3f265e9501c6cd160b8"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // make auth and firestore references
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const functions = firebase.functions();
+
+        // update firestore settings
+        db.settings({ timestampsInSnapshots: true });
+    </script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/index.js"></script>
+    <script src="../scripts/exam.js"></script>
+</body>
+
+</html>

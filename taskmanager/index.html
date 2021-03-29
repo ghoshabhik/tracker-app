@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Task Manager App</title>
+</head>
+
+<body>
+    <nav class="blue-grey">
+        <div class="nav-wrapper">
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/">Home</a></li>
+                <li class="signed-in" style="display: none;"><a href="/taskmanager">Tasks</a></li>
+                <li class="signed-in" style="display: none;"><a href="/books">Books</a></li>
+                <li class="signed-in" style="display: none;"><a href="/exams">Exams</a></li>
+                <li class="signed-in" style="display: none;"><a href="#">Projects</a></li>
+                <li class="signed-in" style="display: none;"><a href="#">Jobs</a></li>
+                <li class="signed-in" style="display: none;"><a href="#">Posts</a></li>
+                <li class="signed-out signin modal-trigger" style="display: none;" data-target="modal-login"><a
+                        href="#">SignIn</a></li>
+                <li class="signed-in" style="display: none;" id="logout"><a href="#">Signout</a></li>
+                <li class="signed-out signin modal-trigger" style="display: none;" data-target="modal-signup"><a
+                        href="#">Sign Up</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-demo">
+        <li><a href="/">Home</a></li>
+        <li class="signed-in" style="display: none;"><a href="/taskmanager">Tasks</a></li>
+        <li class="signed-in" style="display: none;"><a href="/books">Books</a></li>
+        <li class="signed-in" style="display: none;"><a href="/exams">Exams</a></li>
+        <li class="signed-in" style="display: none;"><a href="#">Projects</a></li>
+        <li class="signed-in" style="display: none;"><a href="#">Jobs</a></li>
+        <li class="signed-in" style="display: none;"><a href="#">Posts</a></li>
+        <li class="signed-out signin modal-trigger" style="display: none;" data-target="modal-login"><a
+                href="#">SignIn</a></li>
+        <li class="signed-in" style="display: none;" id="logout"><a href="#">Signout</a></li>
+        <li class="signed-out signin modal-trigger" style="display: none;" data-target="modal-signup"><a href="#">Sign
+                Up</a></li>
+    </ul>
+
+    <!-- SIGN UP MODAL -->
+    <div id="modal-signup" class="modal">
+        <div class="modal-content">
+            <h4>Sign up</h4><br />
+            <form id="signup-form">
+                <div class="input-field">
+                    <input type="email" id="signup-email" required />
+                    <label for="signup-email">Email address</label>
+                </div>
+                <div class="input-field">
+                    <input type="password" id="signup-password" required />
+                    <label for="signup-password">Choose password</label>
+                </div>
+                <button class="btn light-blue darken-4 z-depth-0">Sign up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- LOGIN MODAL -->
+    <div id="modal-login" class="modal">
+        <div class="modal-content">
+            <h4>Login</h4><br />
+            <form id="login-form">
+                <div class="input-field">
+                    <input type="email" id="login-email" required />
+                    <label for="login-email">Email address</label>
+                </div>
+                <div class="input-field">
+                    <input type="password" id="login-password" required />
+                    <label for="login-password">Your password</label>
+                </div>
+                <button class="btn light-blue darken-4 z-depth-0">Login</button>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <div class="container welcome">Hello!</div>
+        <div class="row">
+            <div class="center-align">
+                <div style="margin-top: 30px;">
+                    <h5>Create New Task</h5>
+                </div>
+
+                <a class="btn-floating btn-large waves-effect waves-light light-blue darken-4 modal-trigger"
+                    data-target="modal-create-task"><i class="material-icons">add</i></a>
+                <div style="margin-top: 30px;">
+                    <button class="btn light-blue darken-4" id="default-tasks">Add Default Tasks</button>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="card-panel " style="margin: 30px;">
+            <div class="row">
+                <div class="col s12">
+
+                    <div class="input-field col s6">
+                        <label>Start Date</label>
+                        <input type="text" class="datepicker" id="start-date" required>
+                    </div>
+                    <div class="input-field col s6">
+                        <label>End Date</label>
+                        <input type="text" class="datepicker" id="end-date" required>
+                    </div>
+                    <div class="input-field col s2 offset-s5">
+                        <button class="btn light-blue darken-4" id="refresh-btn">Refresh Data</button>
+                    </div>
+                </div>
+
+
+                <div class="row center-align" id="actual-planned">
+                </div>
+                <div class="progress">
+                </div>
+                <div class="row center-align" id="categories-actual-planned" style="margin:20px;">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <table class="responsive-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Task Name</th>
+                                <th>Task Category</th>
+                                <th>Date</th>
+                                <th>Planned Hours</th>
+                                <th>Actual Hours</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CREATE TASK MODAL -->
+    <div id="modal-create-task" class="modal">
+        <div class="modal-content">
+            <h4>Create New Task</h4><br />
+            <form id="new-task-form">
+                <div class="input-field">
+                    <input type="text" id="task-name" required />
+                    <label for="task-name">Task Name</label>
+                </div>
+                <div class="input-field">
+                    <input type="text" id="task-category" required />
+                    <label for="task-category">Task Category</label>
+                </div>
+                <div class="input-field">
+                    <input type="text" id="task-planned-hours" required />
+                    <label for="task-planned-hours">Planned Hours</label>
+                </div>
+                <!-- <div class="input-field"> -->
+                <input type="text" class="datepicker" id="task-date" required>
+                <!-- </div> -->
+                <button class="btn light-blue darken-4 z-depth-0">Create</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- EDIT TASK MODAL -->
+    <div id="modal-edit-task" class="modal">
+        <div class="modal-content">
+            <h4>Edit Task</h4><br />
+            <form id="edit-task-form">
+                <div class="input-field">
+                    <input type="text" id="task-name-edit" required />
+                    <label for="task-name-edit">Task Name</label>
+                </div>
+                <div class="input-field">
+                    <input type="text" id="task-category-edit" required />
+                    <label for="task-category-edit">Task Category</label>
+                </div>
+                <div class="input-field">
+                    <input type="text" id="task-planned-hours-edit" required />
+                    <label for="task-planned-hours-edit">Planned Hours</label>
+                </div>
+                <div class="input-field">
+                    <input type="text" id="task-actual-hours-edit" required />
+                    <label for="task-actual-hours-edit">Actual Hours</label>
+                </div>
+                <!-- <div class="input-field"> -->
+                <input type="text" class="datepicker" id="task-date-edit" required>
+                <!-- </div> -->
+                <button class="btn light-blue darken-4 z-depth-0" id="edit-modal-btn">Update</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-functions.js"></script>
+    <script>
+        // Initialize Firebase
+        var firebaseConfig = {
+            apiKey: "AIzaSyBC8G2YgmbUVaW_ifPsoFOp__o7ECBBqSY",
+            authDomain: "abhik-dashboard-firebase.firebaseapp.com",
+            projectId: "abhik-dashboard-firebase",
+            storageBucket: "abhik-dashboard-firebase.appspot.com",
+            messagingSenderId: "1061516711337",
+            appId: "1:1061516711337:web:4ed3f265e9501c6cd160b8"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // make auth and firestore references
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const functions = firebase.functions();
+
+        // update firestore settings
+        db.settings({ timestampsInSnapshots: true });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/index.js"></script>
+    <script src="../scripts/task.js"></script>
+</body>
+
+</html>
