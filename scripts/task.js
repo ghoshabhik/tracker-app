@@ -211,7 +211,7 @@ auth.onAuthStateChanged(user => {
     if (user) {
 
     } else {
-        window.location = "/";
+        window.location = "/tracker-app/";
     }
 })
 

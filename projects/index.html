@@ -16,9 +16,9 @@
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="/">Home</a></li>
-                <li class="signed-in" ><a href="/tracker-app/taskmanager">Tasks</a></li>
-                <li class="signed-in" ><a href="/tracker-app/books">Books</a></li>
-                <li class="signed-in" ><a href="/tracker-app/exams">Exams</a></li>
+                <li class="signed-in" ><a href="/taskmanager">Tasks</a></li>
+                <li class="signed-in" ><a href="/books">Books</a></li>
+                <li class="signed-in" ><a href="/exams">Exams</a></li>
                 <li class="signed-in" ><a href="#">Projects</a></li>
                 <li class="signed-in" ><a href="#">Jobs</a></li>
                 <li class="signed-in" ><a href="#">Posts</a></li>
@@ -33,9 +33,9 @@
 
     <ul class="sidenav" id="mobile-demo">
         <li><a href="/">Home</a></li>
-        <li class="signed-in"><a href="/tracker-app/taskmanager">Tasks</a></li>
-        <li class="signed-in"><a href="/tracker-app/books">Books</a></li>
-        <li class="signed-in"><a href="/tracker-app/exams">Exams</a></li>
+        <li class="signed-in"><a href="/taskmanager">Tasks</a></li>
+        <li class="signed-in"><a href="/books">Books</a></li>
+        <li class="signed-in"><a href="/exams">Exams</a></li>
         <li class="signed-in"><a href="#">Projects</a></li>
         <li class="signed-in"><a href="#">Jobs</a></li>
         <li class="signed-in"><a href="#">Posts</a></li>
@@ -77,13 +77,39 @@
                     <input type="password" id="login-password" required />
                     <label for="login-password">Your password</label>
                 </div>
-                <button class="btn light-blue darken-4">Login</button>
+                <button class="btn light-blue darken-4 z-depth-0">Login</button>
             </form>
         </div>
     </div>
     <div class="container">
         <div class="container welcome">Hello!</div>
+        <hr />
+        <div class="card-panel " style="margin: 30px;">
+            <div class="row center-align" id="categories-actual-planned" style="margin:20px;">
+            </div>
+
+            <div class="row">
+                <div class="col s12">
+                    <table class="responsive-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Book Name</th>
+                                <th>Author</th>
+                                <th>Genre</th>
+                                <th>Format</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
+
+
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
@@ -109,9 +135,11 @@
         // update firestore settings
         db.settings({ timestampsInSnapshots: true });
     </script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="scripts/auth.js"></script>
-    <script src="scripts/index.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/index.js"></script>
+    <script src="../scripts/books.js"></script>
 </body>
 
 </html>

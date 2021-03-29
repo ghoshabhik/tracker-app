@@ -35,7 +35,7 @@ logout.addEventListener('click', (e) => {
   auth.signOut().then(() => {
     console.log('user signed out');
   })
-  window.location = "/";
+  window.location = "/tracker-app/";
 });
 
 // login
