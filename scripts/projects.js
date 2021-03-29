@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const getData = () => {
-    fetch('https://todoapp-abhik.netlify.app/api/get-all-books')
+    fetch('https://todoapp-abhik.netlify.app/api/get-all-projects')
         .then(response => response.json())
         .then(data => {
             //console.log(data)
@@ -23,7 +23,7 @@ const getData = () => {
 }
 
 const updateData = (id, status) => {
-    fetch(`https://todoapp-abhik.netlify.app/api/update-book-status?id=${id}&status=${status}`)
+    fetch(`https://todoapp-abhik.netlify.app/api/update-project-status?id=${id}&status=${status}`)
         .then(response => response.json())
         .then(data => {
             if(data){
@@ -39,6 +39,7 @@ $(document).ready(function(){
 const setupBooksList = (data) => {
     var table = document.getElementById('table-body');
     var categorySection = document.getElementById('categories-actual-planned');
+    var projectCategorySection = document.getElementById('categories');
     if (data.length > 0) {
         let html = '';
         let index = 0;
@@ -48,18 +49,19 @@ const setupBooksList = (data) => {
             const tr = `
             <tr>
             <td>${index}</td>
-            <td>${element.fields.BookName}</td>
-            <td>${element.fields.Author}</td>
-            <td>${element.fields.Genre ? element.fields.Genre : ''}</td>
-            <td>${element.fields.Format ? element.fields.Format : ''}</td>
+            <td>${element.fields.Name}</td>
+            <td>${element.fields.Category}</td>
+            <td>${element.fields.StartDate ? element.fields.StartDate : ''}</td>
+            <td>${element.fields.EndDate ? element.fields.EndDate : ''}</td>
+            <td>${element.fields.PlannedNoOfDays ? element.fields.PlannedNoOfDays : ''}</td>
             <td id=${element.id}>
-            
                 <select class="browser-default"  id="select-status" >
                     <option value="" disabled selected>${element.fields.Status}</option>
                     <option value="${element.id}|Not Started">Not Started</option>
-                    <option value="${element.id}|Reading">Reading</option>
-                    <option value="${element.id}|Completed">Completed</option>
-                    <option value="${element.id}|Reviewed">Reviewed</option>
+                    <option value="${element.id}|Planning">Planning</option>
+                    <option value="${element.id}|Coding">Coding</option>
+                    <option value="${element.id}|Documentation">Documentation</option>
+                    <option value="${element.id}|Complete">Complete</option>
                 </select>
             
             </td>
@@ -68,13 +70,14 @@ const setupBooksList = (data) => {
             html += tr;
             dataArr.push({
                 id: element.id,
-                status: element.fields.Status
+                status: element.fields.Status,
+                category: element.fields.Category
             })
             
         });
-        const groupedData = groupBy('status', dataArr);
-        const categoryArr = Object.keys(groupedData);
-        const stat = [];
+        var groupedData = groupBy('status', dataArr);
+        var categoryArr = Object.keys(groupedData);
+        var stat = [];
         var count = 0;
         categoryArr.forEach(category => {
             groupedData[category].map(unit => {
@@ -96,7 +99,42 @@ const setupBooksList = (data) => {
             <span class="${colors[i+4]}" style="padding:10px;">${block.category}: ${block.count}</span>
             `
         });
+        
         categorySection.innerHTML = html;
+
+
+        /* Category  */
+        groupedData = groupBy('category', dataArr);
+        categoryArr = Object.keys(groupedData);
+        stat = [];
+        count = 0;
+        categoryArr.forEach(category => {
+            groupedData[category].map(unit => {
+                count++
+            })
+            stat.push({
+                category: category,
+                count: count
+            });
+            count = 0;
+        });
+        html = '';
+        stat.map((block, i) => {
+            html += `
+            <span class="${colors[i+4]}" style="padding:10px;">${block.category}: ${block.count}</span>
+            `
+        });
+        html = '';
+        stat.map((block, i) => {
+            html += `
+            <span class="${colors[i+1]}" style="padding:10px;">${block.category}: ${block.count}</span>
+            `
+        });
+        
+        projectCategorySection.innerHTML = html;
+        /*  End */
+
+
         const selectStatus = document.querySelectorAll('#select-status');
         selectStatus.forEach(element => {
             element.addEventListener('change', (e) => {
